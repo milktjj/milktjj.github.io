@@ -14,8 +14,8 @@
     <url>%2F2018%2F12%2F28%2Fdocker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[Docker 学习1. 第一个容器命令：1docker run -i -t base/archlinux /bin/bash -i 参数表示进行持久的交互式shell交互，保证容器中的STDIN是开启的。 -t 参数表示分配一个伪tty终端。 至此，便进入了archlinux的交互shell1234pacman -S iproute2# 安装iproute2工具ip address# 查看linux网卡信息 12ps -aux#查看容器]]></content>
       <categories>
-        <category>Docker学习</category>
         <category>学习</category>
+        <category>Docker学习</category>
       </categories>
       <tags>
         <tag>Learning</tag>
