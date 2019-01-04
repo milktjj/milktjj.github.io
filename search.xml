@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Centos搭建本地仓库]]></title>
+    <url>%2F2019%2F01%2F04%2FCentos%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%2F</url>
+    <content type="text"><![CDATA[Centos搭建本地仓库1. 安装同步工具和建立元数据工具12yum install createrepo -yyum install reposync -y reposync 用来同步远程镜像createrepo 用来建立rpm的元数据 2. 选择想要的同步repo文件 将/etc/yum.repo.d/下的repo文件移动到其他目录 添加清华源Centos-Base.repo12345678910111213141516171819202122232425262728293031323334353637383940414243# CentOS-Base.repo## The mirror system uses the connecting IP address of the client and the# update status of each mirror to pick mirrors that are updated to and# geographically close to the client. You should use this for CentOS updates# unless you are manually picking other mirrors.## If the mirrorlist= does not work for you, as a fall back you can try the# remarked out baseurl= line instead.##[base]name=CentOS-$releasever - Basebaseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=osgpgcheck=1gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7#released updates[updates]name=CentOS-$releasever - Updatesbaseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updatesgpgcheck=1gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7#additional packages that may be useful[extras]name=CentOS-$releasever - Extrasbaseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extrasgpgcheck=1gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7#additional packages that extend functionality of existing packages[centosplus]name=CentOS-$releasever - Plusbaseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=centosplusgpgcheck=1enabled=0gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 3. 进行镜像同步1reposync -p /directory 4. 创建元数据1createrepo -p /directory 安装完成]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>Centos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[docker学习笔记]]></title>
+    <url>%2F2018%2F12%2F28%2Fdocker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[Docker 学习1. 第一个容器命令：1docker run -i -t base/archlinux /bin/bash -i 参数表示进行持久的交互式shell交互，保证容器中的STDIN是开启的。 -t 参数表示分配一个伪tty终端。 至此，便进入了archlinux的交互shell1234pacman -S iproute2# 安装iproute2工具ip address# 查看linux网卡信息 12ps -aux#查看容器]]></content>
+      <categories>
+        <category>Docker学习</category>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Learning</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hello World]]></title>
     <url>%2F2018%2F12%2F17%2Fhello-world%2F</url>
     <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
@@ -18,8 +40,8 @@
         <category>学习</category>
       </categories>
       <tags>
-        <tag>English</tag>
         <tag>Learning</tag>
+        <tag>English</tag>
         <tag>shanbay</tag>
       </tags>
   </entry>
