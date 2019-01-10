@@ -5,8 +5,8 @@
     <url>%2F2019%2F01%2F09%2Fnmap%E6%89%AB%E6%8F%8F%E7%AB%AF%E5%8F%A3%2F</url>
     <content type="text"><![CDATA[sudo nmap -PS -p22 –open 10.10.40.1/24]]></content>
       <categories>
-        <category>linux</category>
         <category>学习</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>linux</tag>
