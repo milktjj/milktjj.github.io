@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[nmap扫描端口]]></title>
+    <url>%2F2019%2F01%2F09%2Fnmap%E6%89%AB%E6%8F%8F%E7%AB%AF%E5%8F%A3%2F</url>
+    <content type="text"><![CDATA[sudo nmap -PS -p22 –open 10.10.40.1/24]]></content>
+      <categories>
+        <category>linux</category>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>nmap</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux-exec命令]]></title>
     <url>%2F2019%2F01%2F09%2FLinux-exec%E5%91%BD%E4%BB%A4%2F</url>
     <content type="text"><![CDATA[exec命令shell的内建命令exec将并不启动新的shell，而是用要被执行命令替换当前的shell进程，并且将老进程的环境清理掉，而且exec命令后的其它命令将不再执行。 因此，如果你在一个shell里面，执行exec ls那么，当列出了当前目录后，这个shell就自己退出了，因为这个shell进程已被替换为仅仅执行ls命令的一个进程，执行结束自然也就退出了。为了避免这个影响我们的使用，一般将exec命令放到一个shell脚本里面，用主脚本调用这个脚本，调用点处可以用bash a.sh，（a.sh就是存放该命令的脚本），这样会为a.sh建立一个sub shell去执行，当执行到exec后，该子脚本进程就被替换成了相应的exec的命令。 source命令或者”.”，不会为脚本新建shell，而只是将脚本包含的命令在当前shell执行。 不过，要注意一个例外，当exec命令来对文件描述符操作的时候，就不会替换shell，而且操作完成后，还会继续执行接下来的命令。 exec 3&lt;&amp;0: 这个命令就是将操作符3也指向标准输入。]]></content>
+      <categories>
+        <category>学习</category>
+        <category>linux</category>
+      </categories>
       <tags>
         <tag>linux</tag>
         <tag>exec</tag>
@@ -21,7 +38,7 @@
   <entry>
     <title><![CDATA[docker学习笔记]]></title>
     <url>%2F2018%2F12%2F28%2Fdocker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[Docker 学习1. 第一个容器命令：1docker run -i -t base/archlinux /bin/bash -i 参数表示进行持久的交互式shell交互，保证容器中的STDIN是开启的。 -t 参数表示分配一个伪tty终端。 至此，便进入了archlinux的交互shell1234pacman -S iproute2# 安装iproute2工具ip address# 查看linux网卡信息 12ps -aux#查看容器]]></content>
+    <content type="text"><![CDATA[Docker 学习1. 第一个容器命令：1docker run -i -t base/archlinux /bin/bash -i 参数表示进行持久的交互式shell交互，保证容器中的STDIN是开启的。 -t 参数表示分配一个伪tty终端。 至此，便进入了archlinux的交互shell1234pacman -S iproute2# 安装iproute2工具ip address# 查看linux网卡信息 12ps -aux#查看容器 2. 提交镜像当你为某个容器安装或者修改后想要保存下来，可以使用commit命令将容器保存为一个新的镜像 3. dockerfile编写使用commit可以保存新的镜像，但是使用dockerfile更加细致和灵活，也是官方推荐的方式示例：12345FROM base/archlinux:latestMAINTAINER tjj &quot;milktjj@outlook.com&quot;RUN pacman -Sy --noconfirm apacheRUN echo &apos;test test&apos;EXPOSE 80 FROM: 指定基础镜像MAINTAINER: 为镜像添加基本信息RUN: 在linux中以bash -c command的方式运行命令可以使用RUN [&quot;apt&quot;, &quot;install&quot;, &quot;-y&quot;, &quot;nginx&quot;]进行exec形式的传参执行命令 EXPOSE: 为镜像添加服务的端口，并不会马上分配端口123456789## 启动镜像时进行端口设置、映射或者ip绑定。docker run -d -p 80 --name web milk/web nginx -g &quot;daemon off&quot;docker run -d -p 8080:80 --name web milk/web nginx -g &quot;daemon off&quot;docker run -d -p 127.0.0.1:80:80 --name web milk/web nginx -g &quot;daemin off&quot;docker run -d -p 127.0.0.1::80 --name web milk/web nginx -g &quot;daemin off&quot; -d表示以分离（detached）的方式在后台运行。-p表示控制docker 在运行时应该公开哪些网络端口给外部宿主机。 8080:80 将容器的80端口绑定到宿主机的8080端口。 127.0.0.1:80:80 将容器中的80端口绑定到宿主机的127.0.0.1:80端口。 127.0.0.1::80 将容器的80端口绑定到宿主机的127.0.0.1，未指定端口可以使用docker port命令来查看容器内端口具体绑定的宿主机的端口。 4. 构建镜像docker build . 进行，会在目录下查找DOCKERFILE。]]></content>
       <categories>
         <category>学习</category>
         <category>Docker学习</category>

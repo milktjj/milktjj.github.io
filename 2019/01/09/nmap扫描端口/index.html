@@ -104,25 +104,25 @@
 
 
 
-  <meta name="description" content="Centos搭建本地仓库1. 安装同步工具和建立元数据工具12yum install createrepo -yyum install reposync -y reposync  用来同步远程镜像createrepo  用来建立rpm的元数据 2. 选择想要的同步repo文件 将/etc/yum.repo.d/下的repo文件移动到其他目录 添加清华源Centos-Base.repo1234567">
-<meta name="keywords" content="linux,Centos">
+  <meta name="description" content="sudo nmap -PS -p22 –open 10.10.40.1/24">
+<meta name="keywords" content="linux,nmap">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Centos搭建本地仓库">
-<meta property="og:url" content="http://milktjj.github.io/2019/01/04/Centos搭建本地仓库/index.html">
+<meta property="og:title" content="nmap扫描端口">
+<meta property="og:url" content="http://milktjj.github.io/2019/01/09/nmap扫描端口/index.html">
 <meta property="og:site_name" content="MILK&#39;s BLOG">
-<meta property="og:description" content="Centos搭建本地仓库1. 安装同步工具和建立元数据工具12yum install createrepo -yyum install reposync -y reposync  用来同步远程镜像createrepo  用来建立rpm的元数据 2. 选择想要的同步repo文件 将/etc/yum.repo.d/下的repo文件移动到其他目录 添加清华源Centos-Base.repo1234567">
+<meta property="og:description" content="sudo nmap -PS -p22 –open 10.10.40.1/24">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-04T07:59:14.758Z">
+<meta property="og:updated_time" content="2019-01-09T07:25:21.448Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Centos搭建本地仓库">
-<meta name="twitter:description" content="Centos搭建本地仓库1. 安装同步工具和建立元数据工具12yum install createrepo -yyum install reposync -y reposync  用来同步远程镜像createrepo  用来建立rpm的元数据 2. 选择想要的同步repo文件 将/etc/yum.repo.d/下的repo文件移动到其他目录 添加清华源Centos-Base.repo1234567">
+<meta name="twitter:title" content="nmap扫描端口">
+<meta name="twitter:description" content="sudo nmap -PS -p22 –open 10.10.40.1/24">
 
 
 
 
 
 
-  <link rel="canonical" href="http://milktjj.github.io/2019/01/04/Centos搭建本地仓库/">
+  <link rel="canonical" href="http://milktjj.github.io/2019/01/09/nmap扫描端口/">
 
 
 
@@ -132,7 +132,7 @@
   };
 </script>
 
-  <title>Centos搭建本地仓库 | MILK's BLOG</title>
+  <title>nmap扫描端口 | MILK's BLOG</title>
   
 
 
@@ -346,7 +346,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://milktjj.github.io/2019/01/04/Centos搭建本地仓库/">
+    <link itemprop="mainEntityOfPage" href="http://milktjj.github.io/2019/01/09/nmap扫描端口/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MILKTJJ">
@@ -363,7 +363,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Centos搭建本地仓库
+          <h1 class="post-title" itemprop="name headline">nmap扫描端口
 
               
             
@@ -389,7 +389,7 @@
                 
               
 
-              <time title="创建时间：2019-01-04 11:06:36 / 修改时间：15:59:14" itemprop="dateCreated datePublished" datetime="2019-01-04T11:06:36+08:00">2019-01-04</time>
+              <time title="创建时间：2019-01-09 15:24:48 / 修改时间：15:25:21" itemprop="dateCreated datePublished" datetime="2019-01-09T15:24:48+08:00">2019-01-09</time>
             
 
             
@@ -399,6 +399,31 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -427,16 +452,8 @@
       
 
       
-        <h1 id="Centos搭建本地仓库"><a href="#Centos搭建本地仓库" class="headerlink" title="Centos搭建本地仓库"></a>Centos搭建本地仓库</h1><h2 id="1-安装同步工具和建立元数据工具"><a href="#1-安装同步工具和建立元数据工具" class="headerlink" title="1. 安装同步工具和建立元数据工具"></a>1. 安装同步工具和建立元数据工具</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install createrepo -y</span><br><span class="line">yum install reposync -y</span><br></pre></td></tr></table></figure>
-<p><em>reposync</em>  用来同步远程镜像<br><em>createrepo</em>  用来建立rpm的元数据</p>
-<h2 id="2-选择想要的同步repo文件"><a href="#2-选择想要的同步repo文件" class="headerlink" title="2. 选择想要的同步repo文件"></a>2. 选择想要的同步repo文件</h2><ul>
-<li>将<strong><em>/etc/yum.repo.d/</em></strong>下的repo文件移动到其他目录</li>
-<li>添加清华源<br>Centos-Base.repo<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># CentOS-Base.repo</span><br><span class="line">#</span><br><span class="line"># The mirror system uses the connecting IP address of the client and the</span><br><span class="line"># update status of each mirror to pick mirrors that are updated to and</span><br><span class="line"># geographically close to the client.  You should use this for CentOS updates</span><br><span class="line"># unless you are manually picking other mirrors.</span><br><span class="line">#</span><br><span class="line"># If the mirrorlist= does not work for you, as a fall back you can try the</span><br><span class="line"># remarked out baseurl= line instead.</span><br><span class="line">#</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">[base]</span><br><span class="line">name=CentOS-$releasever - Base</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#released updates</span><br><span class="line">[updates]</span><br><span class="line">name=CentOS-$releasever - Updates</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updates</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that may be useful</span><br><span class="line">[extras]</span><br><span class="line">name=CentOS-$releasever - Extras</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extras</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that extend functionality of existing packages</span><br><span class="line">[centosplus]</span><br><span class="line">name=CentOS-$releasever - Plus</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=centosplus</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="3-进行镜像同步"><a href="#3-进行镜像同步" class="headerlink" title="3. 进行镜像同步"></a>3. 进行镜像同步</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reposync -p /directory</span><br></pre></td></tr></table></figure>
-<h2 id="4-创建元数据"><a href="#4-创建元数据" class="headerlink" title="4. 创建元数据"></a>4. 创建元数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">createrepo -p /directory</span><br></pre></td></tr></table></figure>
-<h1 id="安装完成"><a href="#安装完成" class="headerlink" title="安装完成"></a>安装完成</h1>
+        <p>sudo nmap -PS -p22 –open 10.10.40.1/24</p>
+
       
     </div>
 
@@ -461,7 +478,7 @@
           
             <a href="/tags/linux/" rel="tag"># linux</a>
           
-            <a href="/tags/Centos/" rel="tag"># Centos</a>
+            <a href="/tags/nmap/" rel="tag"># nmap</a>
           
         </div>
       
@@ -474,8 +491,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/28/docker学习笔记/" rel="next" title="docker学习笔记">
-                <i class="fa fa-chevron-left"></i> docker学习笔记
+              <a href="/2019/01/09/Linux-exec命令/" rel="next" title="Linux-exec命令">
+                <i class="fa fa-chevron-left"></i> Linux-exec命令
               </a>
             
           </div>
@@ -483,10 +500,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/09/Linux-exec命令/" rel="prev" title="Linux-exec命令">
-                Linux-exec命令 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -531,17 +544,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -637,22 +641,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Centos搭建本地仓库"><span class="nav-number">1.</span> <span class="nav-text">Centos搭建本地仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-安装同步工具和建立元数据工具"><span class="nav-number">1.1.</span> <span class="nav-text">1. 安装同步工具和建立元数据工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-选择想要的同步repo文件"><span class="nav-number">1.2.</span> <span class="nav-text">2. 选择想要的同步repo文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-进行镜像同步"><span class="nav-number">1.3.</span> <span class="nav-text">3. 进行镜像同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-创建元数据"><span class="nav-number">1.4.</span> <span class="nav-text">4. 创建元数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装完成"><span class="nav-number">2.</span> <span class="nav-text">安装完成</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

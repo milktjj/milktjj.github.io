@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="MILK&#39;s BLOG">
 <meta property="og:description" content="exec命令shell的内建命令exec将并不启动新的shell，而是用要被执行命令替换当前的shell进程，并且将老进程的环境清理掉，而且exec命令后的其它命令将不再执行。 因此，如果你在一个shell里面，执行exec ls那么，当列出了当前目录后，这个shell就自己退出了，因为这个shell进程已被替换为仅仅执行ls命令的一个进程，执行结束自然也就退出了。为了避免这个影响我们的使用，一般">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-09T05:58:14.705Z">
+<meta property="og:updated_time" content="2019-01-09T06:04:08.954Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux-exec命令">
 <meta name="twitter:description" content="exec命令shell的内建命令exec将并不启动新的shell，而是用要被执行命令替换当前的shell进程，并且将老进程的环境清理掉，而且exec命令后的其它命令将不再执行。 因此，如果你在一个shell里面，执行exec ls那么，当列出了当前目录后，这个shell就自己退出了，因为这个shell进程已被替换为仅仅执行ls命令的一个进程，执行结束自然也就退出了。为了避免这个影响我们的使用，一般">
@@ -389,7 +389,7 @@
                 
               
 
-              <time title="创建时间：2019-01-09 13:50:40 / 修改时间：13:58:14" itemprop="dateCreated datePublished" datetime="2019-01-09T13:50:40+08:00">2019-01-09</time>
+              <time title="创建时间：2019-01-09 13:50:40 / 修改时间：14:04:08" itemprop="dateCreated datePublished" datetime="2019-01-09T13:50:40+08:00">2019-01-09</time>
             
 
             
@@ -399,6 +399,31 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -427,7 +452,7 @@
       
 
       
-        <h1 id="exec命令"><a href="#exec命令" class="headerlink" title="exec命令"></a>exec命令</h1><p>shell的内建命令<em>exec</em>将并不启动新的shell，而是用要被执行命令替换当前的shell进程，并且将老进程的环境清理掉，而且<em>exec</em>命令后的其它命令将不再执行。</p>
+        <h1 id="exec命令"><a href="#exec命令" class="headerlink" title="exec命令"></a>exec命令</h1><p>shell的内建命令<strong>exec</strong>将并不启动新的shell，而是用要被执行命令替换当前的shell进程，并且将老进程的环境清理掉，而且<strong>exec</strong>命令后的其它命令将不再执行。</p>
 <p>因此，如果你在一个shell里面，执行<code>exec ls</code>那么，当列出了当前目录后，这个shell就自己退出了，因为这个shell进程已被替换为仅仅执行ls命令的一个进程，执行结束自然也就退出了。为了避免这个影响我们的使用，一般将exec命令放到一个shell脚本里面，用主脚本调用这个脚本，调用点处可以用<code>bash a.sh</code>，（a.sh就是存放该命令的脚本），这样会为a.sh建立一个sub shell去执行，当执行到exec后，该子脚本进程就被替换成了相应的exec的命令。</p>
 <p>source命令或者”.”，不会为脚本新建shell，而只是将脚本包含的命令在当前shell执行。</p>
 <p>不过，要注意一个例外，当exec命令来对文件描述符操作的时候，就不会替换shell，而且操作完成后，还会继续执行接下来的命令。</p>
@@ -479,6 +504,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/09/nmap扫描端口/" rel="prev" title="nmap扫描端口">
+                nmap扫描端口 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -548,7 +577,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -567,7 +596,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -596,7 +631,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

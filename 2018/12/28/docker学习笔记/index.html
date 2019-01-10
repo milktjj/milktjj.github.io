@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="MILK&#39;s BLOG">
 <meta property="og:description" content="Docker 学习1. 第一个容器命令：1docker run -i -t base/archlinux /bin/bash  -i 参数表示进行持久的交互式shell交互，保证容器中的STDIN是开启的。 -t 参数表示分配一个伪tty终端。  至此，便进入了archlinux的交互shell1234pacman -S iproute2#   安装iproute2工具ip address#">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-04T08:14:19.675Z">
+<meta property="og:updated_time" content="2019-01-10T03:25:32.244Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker学习笔记">
 <meta name="twitter:description" content="Docker 学习1. 第一个容器命令：1docker run -i -t base/archlinux /bin/bash  -i 参数表示进行持久的交互式shell交互，保证容器中的STDIN是开启的。 -t 参数表示分配一个伪tty终端。  至此，便进入了archlinux的交互shell1234pacman -S iproute2#   安装iproute2工具ip address#">
@@ -406,7 +406,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-04 16:14:19" itemprop="dateModified" datetime="2019-01-04T16:14:19+08:00">2019-01-04</time>
+                <time title="修改时间：2019-01-10 11:25:32" itemprop="dateModified" datetime="2019-01-10T11:25:32+08:00">2019-01-10</time>
               
             
           </span>
@@ -471,6 +471,12 @@
 </ul>
 <p>至此，便进入了archlinux的交互shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pacman -S iproute2</span><br><span class="line">#   安装iproute2工具</span><br><span class="line">ip address</span><br><span class="line">#   查看linux网卡信息</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -aux</span><br><span class="line">#查看容器</span><br></pre></td></tr></table></figure>
+<h2 id="2-提交镜像"><a href="#2-提交镜像" class="headerlink" title="2. 提交镜像"></a>2. 提交镜像</h2><p><code>当你为某个容器安装或者修改后想要保存下来，可以使用commit命令将容器保存为一个新的镜像</code></p>
+<h2 id="3-dockerfile编写"><a href="#3-dockerfile编写" class="headerlink" title="3. dockerfile编写"></a>3. dockerfile编写</h2><p><code>使用commit可以保存新的镜像，但是使用dockerfile更加细致和灵活，也是官方推荐的方式</code><br><strong>示例：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM base/archlinux:latest</span><br><span class="line">MAINTAINER tjj &quot;milktjj@outlook.com&quot;</span><br><span class="line">RUN pacman -Sy --noconfirm apache</span><br><span class="line">RUN echo &apos;test test&apos;</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure></p>
+<h3 id="FROM-指定基础镜像"><a href="#FROM-指定基础镜像" class="headerlink" title="FROM: 指定基础镜像"></a><strong>FROM</strong>: 指定基础镜像</h3><h3 id="MAINTAINER-为镜像添加基本信息"><a href="#MAINTAINER-为镜像添加基本信息" class="headerlink" title="MAINTAINER: 为镜像添加基本信息"></a><strong>MAINTAINER</strong>: 为镜像添加基本信息</h3><h3 id="RUN-在linux中以bash-c-command的方式运行命令"><a href="#RUN-在linux中以bash-c-command的方式运行命令" class="headerlink" title="RUN: 在linux中以bash -c command的方式运行命令"></a><strong>RUN</strong>: 在linux中以<code>bash -c command</code>的方式运行命令</h3><p>可以使用<code>RUN [&quot;apt&quot;, &quot;install&quot;, &quot;-y&quot;, &quot;nginx&quot;]</code>进行exec形式的传参执行命令</p>
+<h3 id="EXPOSE-为镜像添加服务的端口，并不会马上分配端口"><a href="#EXPOSE-为镜像添加服务的端口，并不会马上分配端口" class="headerlink" title="EXPOSE: 为镜像添加服务的端口，并不会马上分配端口"></a><strong>EXPOSE</strong>: 为镜像添加服务的端口，并不会马上分配端口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">## 启动镜像时进行端口设置、映射或者ip绑定。</span><br><span class="line"></span><br><span class="line">docker run -d -p 80 --name web milk/web nginx -g &quot;daemon off&quot;</span><br><span class="line"></span><br><span class="line">docker run -d -p 8080:80 --name web milk/web nginx -g &quot;daemon off&quot;</span><br><span class="line"></span><br><span class="line">docker run -d -p 127.0.0.1:80:80 --name web milk/web nginx -g &quot;daemin off&quot;</span><br><span class="line"></span><br><span class="line">docker run -d -p 127.0.0.1::80 --name web milk/web nginx -g &quot;daemin off&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>-d</strong>表示以分离（detached）的方式在后台运行。<br><strong>-p</strong>表示控制docker 在运行时应该公开哪些网络端口给外部宿主机。<br>    8080:80 将容器的80端口绑定到宿主机的8080端口。<br>    127.0.0.1:80:80 将容器中的80端口绑定到宿主机的127.0.0.1:80端口。<br>    127.0.0.1::80 将容器的80端口绑定到宿主机的127.0.0.1，未指定端口可以使用<code>docker port</code>命令来查看容器内端口具体绑定的宿主机的端口。</p>
+<h2 id="4-构建镜像"><a href="#4-构建镜像" class="headerlink" title="4. 构建镜像"></a>4. 构建镜像</h2><p><code>docker build .</code> 进行，会在目录下查找DOCKERFILE。</p>
 
       
     </div>
@@ -591,7 +597,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -610,7 +616,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -639,7 +651,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -674,7 +688,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-学习"><span class="nav-number">1.</span> <span class="nav-text">Docker 学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-第一个容器"><span class="nav-number">1.1.</span> <span class="nav-text">1. 第一个容器</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-学习"><span class="nav-number">1.</span> <span class="nav-text">Docker 学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-第一个容器"><span class="nav-number">1.1.</span> <span class="nav-text">1. 第一个容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-提交镜像"><span class="nav-number">1.2.</span> <span class="nav-text">2. 提交镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-dockerfile编写"><span class="nav-number">1.3.</span> <span class="nav-text">3. dockerfile编写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FROM-指定基础镜像"><span class="nav-number">1.3.1.</span> <span class="nav-text">FROM: 指定基础镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MAINTAINER-为镜像添加基本信息"><span class="nav-number">1.3.2.</span> <span class="nav-text">MAINTAINER: 为镜像添加基本信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RUN-在linux中以bash-c-command的方式运行命令"><span class="nav-number">1.3.3.</span> <span class="nav-text">RUN: 在linux中以bash -c command的方式运行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXPOSE-为镜像添加服务的端口，并不会马上分配端口"><span class="nav-number">1.3.4.</span> <span class="nav-text">EXPOSE: 为镜像添加服务的端口，并不会马上分配端口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-构建镜像"><span class="nav-number">1.4.</span> <span class="nav-text">4. 构建镜像</span></a></li></ol></li></ol></div>
             
 
           </div>
