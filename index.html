@@ -342,6 +342,332 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://milktjj.github.io/2019/02/18/linux根目录扩容/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MILKTJJ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MILK's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/18/linux根目录扩容/" class="post-title-link" itemprop="http://milktjj.github.io/index.html">linux根目录扩容</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-18 16:45:30" itemprop="dateCreated datePublished" datetime="2019-02-18T16:45:30+08:00">2019-02-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-19 10:01:37" itemprop="dateModified" datetime="2019-02-19T10:01:37+08:00">2019-02-19</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="扩容linux根目录"><a href="#扩容linux根目录" class="headerlink" title="扩容linux根目录"></a>扩容linux根目录</h1><h2 id="1-lvm版"><a href="#1-lvm版" class="headerlink" title="1. lvm版"></a>1. lvm版</h2><h3 id="LVM简介"><a href="#LVM简介" class="headerlink" title="LVM简介"></a><code>LVM简介</code></h3><p>LVM全称Logical Volume Manager，逻辑卷管理，在linux系统下对磁盘分区进行管理的机制，是建立在物理磁盘上的抽象层。</p>
+<h4 id="物理卷（pv，physical-volume）"><a href="#物理卷（pv，physical-volume）" class="headerlink" title="物理卷（pv，physical volume）"></a>物理卷（pv，physical volume）</h4><p>可以理解为linux下的物理磁盘或者磁盘分区，如/dev/sdb（磁盘）、/dev/sdb1（磁盘分区，通过fdisk对/dev/sdb进行操作划分出来的磁盘分区，类似于windows下的C、D、E盘），但是和物理磁盘以及磁盘分区不同的是，物理卷含有和LVM相关的参数</p>
+<h4 id="卷组（vg，volume-group）"><a href="#卷组（vg，volume-group）" class="headerlink" title="卷组（vg，volume group）"></a>卷组（vg，volume group）</h4><p>由一个或者多个物理卷组成的卷组</p>
+<h4 id="逻辑卷（lv，logical-volume）"><a href="#逻辑卷（lv，logical-volume）" class="headerlink" title="逻辑卷（lv，logical volume）"></a>逻辑卷（lv，logical volume）</h4><p>通过卷组划分出来的分区，可以用来建立文件系统，例如/dev/mapper/centos-root 是根目录的文件系统挂载点，它就是建立在一个逻辑卷之上的，该文件系统的大小就是这个逻辑卷的大小</p>
+<h4 id="物理块（PE，physical-extent）"><a href="#物理块（PE，physical-extent）" class="headerlink" title="物理块（PE，physical extent）"></a>物理块（PE，physical extent）</h4><p>每个物理卷被分为若干个物理块，是LVM寻址中的最小单元，有唯一编号，可以设置大小，默认为4MB</p>
+<h4 id="逻辑块（LE，logical-extent）"><a href="#逻辑块（LE，logical-extent）" class="headerlink" title="逻辑块（LE，logical extent）"></a>逻辑块（LE，logical extent）</h4><p>每个逻辑卷被分为若干个逻辑卷，与PE是一一对应的</p>
+<h4 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建物理卷，物理卷会写入lvm相关信息</span></span><br><span class="line">pvcreate /dev/sda2</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看创建的物理卷</span></span><br><span class="line">$ pvdisplay</span><br><span class="line"></span><br><span class="line"> --- Physical volume ---</span><br><span class="line">  PV Name               /dev/sda2</span><br><span class="line">  VG Name               centos</span><br><span class="line">  PV Size               7.51 GiB / not usable 3.00 MiB</span><br><span class="line">  Allocatable           yes </span><br><span class="line">  PE Size               4.00 MiB</span><br><span class="line">  Total PE              1922</span><br><span class="line">  Free PE               10</span><br><span class="line">  Allocated PE          1912</span><br><span class="line">  PV UUID               SFY7mk-Tkm3-pvih-tydL-zNaQ-3OcT-hv7hES</span><br><span class="line"></span><br><span class="line">  <span class="string">"/dev/sdb1"</span> is a new physical volume of <span class="string">"1.00 GiB"</span></span><br><span class="line">  --- NEW Physical volume ---</span><br><span class="line">  PV Name               /dev/sdb1</span><br><span class="line">  VG Name               </span><br><span class="line">  PV Size               1.00 GiB</span><br><span class="line">  Allocatable           NO</span><br><span class="line">  PE Size               0   </span><br><span class="line">  Total PE              0</span><br><span class="line">  Free PE               0</span><br><span class="line">  Allocated PE          0</span><br><span class="line">  PV UUID               MLLBUH-e9bY-2eMd-Lgpk-70px-4uan-nTRfHQ</span><br><span class="line"></span><br><span class="line"><span class="comment">#新建卷组</span></span><br><span class="line">vgcreate root /dev/sda2 /dev/sda1</span><br><span class="line"></span><br><span class="line"><span class="comment">#新建lvm分区</span></span><br><span class="line">lvcreate -L 8G -n lv root</span><br><span class="line"></span><br><span class="line"><span class="comment">#挂载</span></span><br><span class="line">mount /dev/mapper/root-lv /mnt</span><br><span class="line"></span><br><span class="line"><span class="comment">#扩容</span></span><br><span class="line">vgextend root /dev/sda3</span><br><span class="line">lvextend -L 8G /dev/mapper/root-lv</span><br><span class="line">resize2fs /dev/mapper/root-lv</span><br></pre></td></tr></table></figure>
+<h2 id="2-普通版本"><a href="#2-普通版本" class="headerlink" title="2. 普通版本"></a>2. 普通版本</h2><h3 id="普通版本试用与扩容分区连续，没有lvm灵活"><a href="#普通版本试用与扩容分区连续，没有lvm灵活" class="headerlink" title="普通版本试用与扩容分区连续，没有lvm灵活"></a>普通版本试用与扩容分区连续，没有lvm灵活</h3><h4 id="实际操作-1"><a href="#实际操作-1" class="headerlink" title="实际操作"></a>实际操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ fdisk /dev/sda</span><br><span class="line"><span class="comment"># 输入p查看并记录想要扩容的分区的初始扇区!!!!非常重要</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入d删除想要删除的分区</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入n新建分区，初始扇区为之前的记录，结束扇区为想要扩容的大小</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入w保存分区表的修改</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 完成后使用resize2fs完成容量的更新，如果报错可以重启后再试</span></span><br><span class="line">resize2fs /dev/sda1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用df -h查看是否成功完成修改</span></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://milktjj.github.io/2019/01/31/python学习/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MILKTJJ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MILK's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/31/python学习/" class="post-title-link" itemprop="http://milktjj.github.io/index.html">python学习</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-31 09:28:38 / 修改时间：09:29:35" itemprop="dateCreated datePublished" datetime="2019-01-31T09:28:38+08:00">2019-01-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://milktjj.github.io/2019/01/09/nmap扫描端口/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -904,7 +1230,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-10 11:31:33" itemprop="dateModified" datetime="2019-01-10T11:31:33+08:00">2019-01-10</time>
+                <time title="修改时间：2019-01-11 16:51:22" itemprop="dateModified" datetime="2019-01-11T16:51:22+08:00">2019-01-11</time>
               
             
           </span>
@@ -964,22 +1290,26 @@
       
         
           
-            <h1 id="Docker-学习"><a href="#Docker-学习" class="headerlink" title="Docker 学习"></a>Docker 学习</h1><h2 id="1-第一个容器"><a href="#1-第一个容器" class="headerlink" title="1. 第一个容器"></a>1. 第一个容器</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -i -t base/archlinux /bin/bash</span><br></pre></td></tr></table></figure></p>
+            <h1 id="Docker-学习"><a href="#Docker-学习" class="headerlink" title="Docker 学习"></a>Docker 学习</h1><h2 id="1-第一个容器"><a href="#1-第一个容器" class="headerlink" title="1. 第一个容器"></a>1. 第一个容器</h2><p>命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -i -t base/archlinux /bin/bash</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li><strong><em>-i</em></strong> 参数表示进行持久的交互式shell交互，保证容器中的STDIN是开启的。</li>
 <li><strong><em>-t</em></strong> 参数表示分配一个伪tty终端。</li>
 </ul>
-<p>至此，便进入了archlinux的交互shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pacman -S iproute2</span><br><span class="line">#   安装iproute2工具</span><br><span class="line">ip address</span><br><span class="line">#   查看linux网卡信息</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -aux</span><br><span class="line">#查看容器</span><br></pre></td></tr></table></figure>
+<p>至此，便进入了archlinux的交互shell<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pacman -S iproute2</span><br><span class="line"><span class="comment">#   安装iproute2工具</span></span><br><span class="line">ip address</span><br><span class="line"><span class="comment">#   查看linux网卡信息</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -aux</span><br><span class="line"><span class="comment">#查看容器</span></span><br></pre></td></tr></table></figure>
 <h2 id="2-提交镜像"><a href="#2-提交镜像" class="headerlink" title="2. 提交镜像"></a>2. 提交镜像</h2><p><code>当你为某个容器安装或者修改后想要保存下来，可以使用commit命令将容器保存为一个新的镜像</code></p>
-<h2 id="3-dockerfile编写"><a href="#3-dockerfile编写" class="headerlink" title="3. dockerfile编写"></a>3. dockerfile编写</h2><p><code>使用commit可以保存新的镜像，但是使用dockerfile更加细致和灵活，也是官方推荐的方式</code><br><strong>示例：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM base/archlinux:latest</span><br><span class="line">MAINTAINER tjj &quot;milktjj@outlook.com&quot;</span><br><span class="line">RUN pacman -Sy --noconfirm apache</span><br><span class="line">RUN echo &apos;test test&apos;</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-dockerfile编写"><a href="#3-dockerfile编写" class="headerlink" title="3. dockerfile编写"></a>3. dockerfile编写</h2><p><code>使用commit可以保存新的镜像，但是使用dockerfile更加细致和灵活，也是官方推荐的方式</code><br><strong>示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM base/archlinux:latest</span><br><span class="line">MAINTAINER tjj <span class="string">"milktjj@outlook.com"</span></span><br><span class="line">RUN pacman -Sy --noconfirm apache</span><br><span class="line">RUN <span class="built_in">echo</span> <span class="string">'test test'</span></span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure></p>
 <h3 id="FROM-指定基础镜像"><a href="#FROM-指定基础镜像" class="headerlink" title="FROM: 指定基础镜像"></a><strong>FROM</strong>: 指定基础镜像</h3><h3 id="MAINTAINER-为镜像添加基本信息"><a href="#MAINTAINER-为镜像添加基本信息" class="headerlink" title="MAINTAINER: 为镜像添加基本信息"></a><strong>MAINTAINER</strong>: 为镜像添加基本信息</h3><h3 id="RUN-在linux中以bash-c-command的方式运行命令"><a href="#RUN-在linux中以bash-c-command的方式运行命令" class="headerlink" title="RUN: 在linux中以bash -c command的方式运行命令"></a><strong>RUN</strong>: 在linux中以<code>bash -c command</code>的方式运行命令</h3><p>可以使用<code>RUN [&quot;apt&quot;, &quot;install&quot;, &quot;-y&quot;, &quot;nginx&quot;]</code>进行exec形式的传参执行命令</p>
-<h3 id="EXPOSE-为镜像添加服务的端口，并不会马上分配端口"><a href="#EXPOSE-为镜像添加服务的端口，并不会马上分配端口" class="headerlink" title="EXPOSE: 为镜像添加服务的端口，并不会马上分配端口"></a><strong>EXPOSE</strong>: 为镜像添加服务的端口，并不会马上分配端口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">## 启动镜像时进行端口设置、映射或者ip绑定。</span><br><span class="line"></span><br><span class="line">  docker run -d -p 80 --name web milk/web nginx -g &quot;daemon off&quot;</span><br><span class="line"></span><br><span class="line">  docker run -d -p 8080:80 --name web milk/web nginx -g &quot;daemon off&quot;</span><br><span class="line"></span><br><span class="line">  docker run -d -p 127.0.0.1:80:80 --name web milk/web nginx -g &quot;daemin off&quot;</span><br><span class="line"></span><br><span class="line">  docker run -d -p 127.0.0.1::80 --name web milk/web nginx -g &quot;daemin off&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="EXPOSE-为镜像添加服务的端口，并不会马上分配端口"><a href="#EXPOSE-为镜像添加服务的端口，并不会马上分配端口" class="headerlink" title="EXPOSE: 为镜像添加服务的端口，并不会马上分配端口"></a><strong>EXPOSE</strong>: 为镜像添加服务的端口，并不会马上分配端口</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 启动镜像时进行端口设置、映射或者ip绑定。</span></span><br><span class="line"></span><br><span class="line">  docker run -d -p 80 --name web milk/web nginx -g <span class="string">"daemon off"</span></span><br><span class="line"></span><br><span class="line">  docker run -d -p 8080:80 --name web milk/web nginx -g <span class="string">"daemon off"</span></span><br><span class="line"></span><br><span class="line">  docker run -d -p 127.0.0.1:80:80 --name web milk/web nginx -g <span class="string">"daemin off"</span></span><br><span class="line"></span><br><span class="line">  docker run -d -p 127.0.0.1::80 --name web milk/web nginx -g <span class="string">"daemin off"</span></span><br></pre></td></tr></table></figure>
 <p><strong>-d</strong>：表示以分离（detached）的方式在后台运行。<br><strong>-p</strong>：表示控制docker 在运行时应该公开哪些网络端口给外部宿主机。</p>
 <blockquote>
 <p>8080:80 将容器的80端口绑定到宿主机的8080端口。<br>127.0.0.1:80:80 将容器中的80端口绑定到宿主机的127.0.0.1:80端口。<br>127.0.0.1::80 将容器的80端口绑定到宿主机的127.0.0.1，未指定端口可以使用<code>docker port</code>命令来查看容器内端口具体绑定的宿主机的端口。</p>
 </blockquote>
-<h2 id="4-构建镜像"><a href="#4-构建镜像" class="headerlink" title="4. 构建镜像"></a>4. 构建镜像</h2><p><code>docker build .</code> 进行，会在目录下查找DOCKERFILE。</p>
+<h3 id="CMD：为镜像设置默认启动命令"><a href="#CMD：为镜像设置默认启动命令" class="headerlink" title="CMD：为镜像设置默认启动命令"></a><strong>CMD</strong>：为镜像设置默认启动命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CMD [<span class="string">"/bin/bash"</span>， <span class="string">"-l"</span>]</span><br><span class="line"><span class="comment">#无需指定启动运行命令，自动使用CMD中的命令</span></span><br><span class="line">$ sudo docker run -t -i bash/linux</span><br><span class="line">root@<span class="built_in">test</span>:/<span class="comment">#</span></span><br><span class="line"><span class="comment">#命令可以进行覆盖</span></span><br><span class="line">$ sudo docker run -t -i base/linux /bin/ps</span><br></pre></td></tr></table></figure>
+<h3 id="ENTRYPOINT：功能类似CMD命令，但是不会被覆盖，所有传进去的命令都会被视为参数传给ENTRYPOINT，包括CMD命令。"><a href="#ENTRYPOINT：功能类似CMD命令，但是不会被覆盖，所有传进去的命令都会被视为参数传给ENTRYPOINT，包括CMD命令。" class="headerlink" title="ENTRYPOINT：功能类似CMD命令，但是不会被覆盖，所有传进去的命令都会被视为参数传给ENTRYPOINT，包括CMD命令。"></a><strong>ENTRYPOINT</strong>：功能类似<code>CMD</code>命令，但是不会被覆盖，所有传进去的命令都会被视为参数传给<code>ENTRYPOINT</code>，包括<code>CMD</code>命令。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ENTRYPOINT [<span class="string">"/usr/sbin/nginx"</span>]</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [<span class="string">"/usr/sbin/nginx"</span>, <span class="string">"-g"</span>, <span class="string">"daemon off"</span>]</span><br><span class="line"></span><br><span class="line">sudo docker run -t -i base/linux -g <span class="string">"daemin off"</span></span><br></pre></td></tr></table></figure>
+<h3 id="WORKDIR：设置命令执行的目录，ENTRYPOINT和-或CMD指定的程序会在这个目录下执行。"><a href="#WORKDIR：设置命令执行的目录，ENTRYPOINT和-或CMD指定的程序会在这个目录下执行。" class="headerlink" title="WORKDIR：设置命令执行的目录，ENTRYPOINT和/或CMD指定的程序会在这个目录下执行。"></a><strong>WORKDIR</strong>：设置命令执行的目录，<code>ENTRYPOINT</code>和<code>/</code>或<code>CMD</code>指定的程序会在这个目录下执行。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">WORKDIR /opt/webapp</span><br><span class="line">RUN bundle install</span><br><span class="line">WORKDIR /opt/webapp</span><br><span class="line">ENTRYPOINT [<span class="string">""</span>start<span class="string">""</span>]</span><br><span class="line"></span><br><span class="line">$ sudo docker run -it -w /var/<span class="built_in">log</span> base/linux <span class="built_in">pwd</span></span><br><span class="line"><span class="comment">#-w 标志可以覆盖dockerfile中配置的WORKDIR</span></span><br></pre></td></tr></table></figure>
+<h3 id="ENV：ENV用来在镜像构建中设置环境变量。"><a href="#ENV：ENV用来在镜像构建中设置环境变量。" class="headerlink" title="ENV：ENV用来在镜像构建中设置环境变量。"></a><strong>ENV</strong>：ENV用来在镜像构建中设置环境变量。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ENV RVM_PPATH /home/rvm</span><br><span class="line">WORKDIR <span class="variable">$RVM_PATH</span></span><br><span class="line"></span><br><span class="line">$ sudo docker rin -it -e <span class="string">"WEB_PORT=8080"</span> base/linux env</span><br></pre></td></tr></table></figure>
+<h3 id="USER：USER指令用来指定镜像会以什么用户去运行"><a href="#USER：USER指令用来指定镜像会以什么用户去运行" class="headerlink" title="USER：USER指令用来指定镜像会以什么用户去运行"></a><strong>USER</strong>：USER指令用来指定镜像会以什么用户去运行</h3><h2 id="4-构建镜像"><a href="#4-构建镜像" class="headerlink" title="4. 构建镜像"></a>4. 构建镜像</h2><p><code>docker build .</code> 进行，会在目录下查找DOCKERFILE。</p>
 
           
         
@@ -1385,7 +1715,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-10 09:44:06" itemprop="dateModified" datetime="2019-01-10T09:44:06+08:00">2019-01-10</time>
+                <time title="修改时间：2019-01-31 11:08:37" itemprop="dateModified" datetime="2019-01-31T11:08:37+08:00">2019-01-31</time>
               
             
           </span>
@@ -1558,7 +1888,7 @@
 <p><code>文章来源：https://www.shanbay.com/news/articles/bpoxn</code></p>
 <h3 id="短文单词-3"><a href="#短文单词-3" class="headerlink" title="短文单词"></a>短文单词</h3><ol>
 <li>deposit &nbsp;&nbsp;&nbsp;&nbsp; <strong>/dɪ’pɑːzɪt/</strong><br>vt. 存放, 堆积, 使沉淀<br>vi. 沉淀<br>n. 存款, 定金, 堆积物       </li>
-<li>renovate &nbsp;&nbsp;&nbsp;&nbsp; <strong>/‘renəveɪt/</strong><br>vt. 更新,革新,刷新      </li>
+<li>renovate &nbsp;&nbsp;&nbsp;&nbsp; <strong>/‘renəveɪt/</strong><br>vt. 更新,革新,刷新,翻新</li>
 <li>revolution &nbsp;&nbsp;&nbsp;&nbsp; <strong>/ˌrevə’luːʃn/</strong><br>n. 革命, 旋转, 转数     </li>
 <li><h3 id="短文词组-3"><a href="#短文词组-3" class="headerlink" title="短文词组"></a>短文词组</h3></li>
 <li>filing for bankruptcy <code>申请破产</code></li>
@@ -1567,6 +1897,33 @@
 <li>the Ministry of Culture and Tourism <code>文化旅游部</code></li>
 <li>bid to do sth. / bid for sth.  <code>努力争取，企图获得</code></li>
 <li></li>
+</ol>
+<h2 id="2019-1-30"><a href="#2019-1-30" class="headerlink" title="2019-1-30"></a>2019-1-30</h2><h3 id="python-学习"><a href="#python-学习" class="headerlink" title="python 学习"></a>python 学习</h3><ol>
+<li>essentially <code>本质上、根本上</code></li>
+<li>isolate <code>隔离</code></li>
+<li>associate <code>(使)联合、(使)发生关系</code></li>
+<li>not be sold on   <code>对。。。不满意</code></li>
+<li>subtraction 详情 &nbsp;&nbsp;&nbsp;&nbsp; <code>[səb&#39;trækʃn]   n.减，减法; 减除法; 减去;</code></li>
+<li>fundanmental notion <code>基础概念</code></li>
+<li>survey 详情  &nbsp;&nbsp;&nbsp;&nbsp; <strong>[ˈsɜrveɪ]</strong><br>vi. 测量土地;<br>vt. 调查; 勘测; 俯瞰;<br>n. 调查（表），调查所，测量，测量部，测量图; 概观，检查，鉴定书; 环顾;</li>
+<li>gloss over <code>演示、搪塞</code></li>
+<li>conceptual <code>概念的</code></li>
+<li>hierarchy <code>分层、层次、等级制度</code></li>
+<li>fit into <code>使合适、与...融入</code></li>
+<li>concrete <code>具体的、凝固、混凝土</code></li>
+<li>perspective <code>透镜、望远镜、观点</code></li>
+<li>decomposed <code>腐烂、分解</code></li>
+<li>pardon <code>宽恕、原谅、赦免、再说一遍</code></li>
+<li>lay out <code>安排</code></li>
+<li>grunt work <code>简单的，枯燥乏味的工作</code></li>
+<li>intrinsic <code>固有的、内在的</code></li>
+<li>precision <code>精度</code></li>
+<li>nest <code>温床、嵌套、鸟窝</code></li>
+<li>square brackets <code>方括号</code></li>
+<li>rational <code>理性的、有理的、有理数</code></li>
+<li>arbitrary <code>任意的、随意的、随心所欲的</code></li>
+<li>quote <code>引用、引号</code></li>
+<li>in terms of <code>就。。。而言</code></li>
 </ol>
 
           
@@ -1746,185 +2103,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://milktjj.github.io/2018/12/17/环境部署/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MILKTJJ">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MILK's BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/17/环境部署/" class="post-title-link" itemprop="http://milktjj.github.io/index.html">环境部署</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-17 14:41:50" itemprop="dateCreated datePublished" datetime="2018-12-17T14:41:50+08:00">2018-12-17</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-21 14:42:53" itemprop="dateModified" datetime="2018-12-21T14:42:53+08:00">2018-12-21</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/博客教程/" itemprop="url" rel="index"><span itemprop="name">博客教程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="搭建教程"><a href="#搭建教程" class="headerlink" title="搭建教程"></a>搭建教程</h1><p><a href="https://www.cnblogs.com/jackyroc/p/7681938.html" target="_blank" rel="noopener">搭建教程</a></p>
-<h1 id="博客使用到的插件"><a href="#博客使用到的插件" class="headerlink" title="博客使用到的插件"></a>博客使用到的插件</h1><ol>
-<li>npm install hexo-deployer-git –save  (github部署)</li>
-<li>npm install hexo-generator-search –save (搜索功能) <strong>未实现</strong></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1965,7 +2150,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1988,9 +2173,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>

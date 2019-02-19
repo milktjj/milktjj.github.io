@@ -104,20 +104,24 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="MILK&#39;s BLOG">
-<meta property="og:url" content="http://milktjj.github.io/tags/搭建教程/index.html">
+  <meta name="description" content="扩容linux根目录1. lvm版LVM简介LVM全称Logical Volume Manager，逻辑卷管理，在linux系统下对磁盘分区进行管理的机制，是建立在物理磁盘上的抽象层。 物理卷（pv，physical volume）可以理解为linux下的物理磁盘或者磁盘分区，如/dev/sdb（磁盘）、/dev/sdb1（磁盘分区，通过fdisk对/dev/sdb进行操作划分出来的磁盘分区，类似">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux根目录扩容">
+<meta property="og:url" content="http://milktjj.github.io/2019/02/18/linux根目录扩容/index.html">
 <meta property="og:site_name" content="MILK&#39;s BLOG">
+<meta property="og:description" content="扩容linux根目录1. lvm版LVM简介LVM全称Logical Volume Manager，逻辑卷管理，在linux系统下对磁盘分区进行管理的机制，是建立在物理磁盘上的抽象层。 物理卷（pv，physical volume）可以理解为linux下的物理磁盘或者磁盘分区，如/dev/sdb（磁盘）、/dev/sdb1（磁盘分区，通过fdisk对/dev/sdb进行操作划分出来的磁盘分区，类似">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-19T02:01:37.223Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MILK&#39;s BLOG">
+<meta name="twitter:title" content="linux根目录扩容">
+<meta name="twitter:description" content="扩容linux根目录1. lvm版LVM简介LVM全称Logical Volume Manager，逻辑卷管理，在linux系统下对磁盘分区进行管理的机制，是建立在物理磁盘上的抽象层。 物理卷（pv，physical volume）可以理解为linux下的物理磁盘或者磁盘分区，如/dev/sdb（磁盘）、/dev/sdb1（磁盘分区，通过fdisk对/dev/sdb进行操作划分出来的磁盘分区，类似">
 
 
 
 
 
 
-  <link rel="canonical" href="http://milktjj.github.io/tags/搭建教程/">
+  <link rel="canonical" href="http://milktjj.github.io/2019/02/18/linux根目录扩容/">
 
 
 
@@ -127,7 +131,7 @@
   };
 </script>
 
-  <title>标签: 搭建教程 | MILK's BLOG</title>
+  <title>linux根目录扩容 | MILK's BLOG</title>
   
 
 
@@ -175,7 +179,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -233,7 +237,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -321,76 +325,189 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>搭建教程<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://milktjj.github.io/2019/02/18/linux根目录扩容/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MILKTJJ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MILK's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/12/17/环境部署/" itemprop="url">
-              
-                <span itemprop="name">环境部署</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">linux根目录扩容
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-17T14:41:50+08:00" content="2018-12-17">
-          12-17
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-18 16:45:30" itemprop="dateCreated datePublished" datetime="2019-02-18T16:45:30+08:00">2019-02-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-19 10:01:37" itemprop="dateModified" datetime="2019-02-19T10:01:37+08:00">2019-02-19</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="扩容linux根目录"><a href="#扩容linux根目录" class="headerlink" title="扩容linux根目录"></a>扩容linux根目录</h1><h2 id="1-lvm版"><a href="#1-lvm版" class="headerlink" title="1. lvm版"></a>1. lvm版</h2><h3 id="LVM简介"><a href="#LVM简介" class="headerlink" title="LVM简介"></a><code>LVM简介</code></h3><p>LVM全称Logical Volume Manager，逻辑卷管理，在linux系统下对磁盘分区进行管理的机制，是建立在物理磁盘上的抽象层。</p>
+<h4 id="物理卷（pv，physical-volume）"><a href="#物理卷（pv，physical-volume）" class="headerlink" title="物理卷（pv，physical volume）"></a>物理卷（pv，physical volume）</h4><p>可以理解为linux下的物理磁盘或者磁盘分区，如/dev/sdb（磁盘）、/dev/sdb1（磁盘分区，通过fdisk对/dev/sdb进行操作划分出来的磁盘分区，类似于windows下的C、D、E盘），但是和物理磁盘以及磁盘分区不同的是，物理卷含有和LVM相关的参数</p>
+<h4 id="卷组（vg，volume-group）"><a href="#卷组（vg，volume-group）" class="headerlink" title="卷组（vg，volume group）"></a>卷组（vg，volume group）</h4><p>由一个或者多个物理卷组成的卷组</p>
+<h4 id="逻辑卷（lv，logical-volume）"><a href="#逻辑卷（lv，logical-volume）" class="headerlink" title="逻辑卷（lv，logical volume）"></a>逻辑卷（lv，logical volume）</h4><p>通过卷组划分出来的分区，可以用来建立文件系统，例如/dev/mapper/centos-root 是根目录的文件系统挂载点，它就是建立在一个逻辑卷之上的，该文件系统的大小就是这个逻辑卷的大小</p>
+<h4 id="物理块（PE，physical-extent）"><a href="#物理块（PE，physical-extent）" class="headerlink" title="物理块（PE，physical extent）"></a>物理块（PE，physical extent）</h4><p>每个物理卷被分为若干个物理块，是LVM寻址中的最小单元，有唯一编号，可以设置大小，默认为4MB</p>
+<h4 id="逻辑块（LE，logical-extent）"><a href="#逻辑块（LE，logical-extent）" class="headerlink" title="逻辑块（LE，logical extent）"></a>逻辑块（LE，logical extent）</h4><p>每个逻辑卷被分为若干个逻辑卷，与PE是一一对应的</p>
+<h4 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建物理卷，物理卷会写入lvm相关信息</span></span><br><span class="line">pvcreate /dev/sda2</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看创建的物理卷</span></span><br><span class="line">$ pvdisplay</span><br><span class="line"></span><br><span class="line"> --- Physical volume ---</span><br><span class="line">  PV Name               /dev/sda2</span><br><span class="line">  VG Name               centos</span><br><span class="line">  PV Size               7.51 GiB / not usable 3.00 MiB</span><br><span class="line">  Allocatable           yes </span><br><span class="line">  PE Size               4.00 MiB</span><br><span class="line">  Total PE              1922</span><br><span class="line">  Free PE               10</span><br><span class="line">  Allocated PE          1912</span><br><span class="line">  PV UUID               SFY7mk-Tkm3-pvih-tydL-zNaQ-3OcT-hv7hES</span><br><span class="line"></span><br><span class="line">  <span class="string">"/dev/sdb1"</span> is a new physical volume of <span class="string">"1.00 GiB"</span></span><br><span class="line">  --- NEW Physical volume ---</span><br><span class="line">  PV Name               /dev/sdb1</span><br><span class="line">  VG Name               </span><br><span class="line">  PV Size               1.00 GiB</span><br><span class="line">  Allocatable           NO</span><br><span class="line">  PE Size               0   </span><br><span class="line">  Total PE              0</span><br><span class="line">  Free PE               0</span><br><span class="line">  Allocated PE          0</span><br><span class="line">  PV UUID               MLLBUH-e9bY-2eMd-Lgpk-70px-4uan-nTRfHQ</span><br><span class="line"></span><br><span class="line"><span class="comment">#新建卷组</span></span><br><span class="line">vgcreate root /dev/sda2 /dev/sda1</span><br><span class="line"></span><br><span class="line"><span class="comment">#新建lvm分区</span></span><br><span class="line">lvcreate -L 8G -n lv root</span><br><span class="line"></span><br><span class="line"><span class="comment">#挂载</span></span><br><span class="line">mount /dev/mapper/root-lv /mnt</span><br><span class="line"></span><br><span class="line"><span class="comment">#扩容</span></span><br><span class="line">vgextend root /dev/sda3</span><br><span class="line">lvextend -L 8G /dev/mapper/root-lv</span><br><span class="line">resize2fs /dev/mapper/root-lv</span><br></pre></td></tr></table></figure>
+<h2 id="2-普通版本"><a href="#2-普通版本" class="headerlink" title="2. 普通版本"></a>2. 普通版本</h2><h3 id="普通版本试用与扩容分区连续，没有lvm灵活"><a href="#普通版本试用与扩容分区连续，没有lvm灵活" class="headerlink" title="普通版本试用与扩容分区连续，没有lvm灵活"></a>普通版本试用与扩容分区连续，没有lvm灵活</h3><h4 id="实际操作-1"><a href="#实际操作-1" class="headerlink" title="实际操作"></a>实际操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ fdisk /dev/sda</span><br><span class="line"><span class="comment"># 输入p查看并记录想要扩容的分区的初始扇区!!!!非常重要</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入d删除想要删除的分区</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入n新建分区，初始扇区为之前的记录，结束扇区为想要扩容的大小</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入w保存分区表的修改</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 完成后使用resize2fs完成容量的更新，如果报错可以重启后再试</span></span><br><span class="line">resize2fs /dev/sda1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用df -h查看是否成功完成修改</span></span><br></pre></td></tr></table></figure>
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/31/python学习/" rel="next" title="python学习">
+                <i class="fa fa-chevron-left"></i> python学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -411,8 +528,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -506,6 +632,22 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#扩容linux根目录"><span class="nav-number">1.</span> <span class="nav-text">扩容linux根目录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-lvm版"><span class="nav-number">1.1.</span> <span class="nav-text">1. lvm版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LVM简介"><span class="nav-number">1.1.1.</span> <span class="nav-text">LVM简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#物理卷（pv，physical-volume）"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">物理卷（pv，physical volume）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#卷组（vg，volume-group）"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">卷组（vg，volume group）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑卷（lv，logical-volume）"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">逻辑卷（lv，logical volume）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#物理块（PE，physical-extent）"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">物理块（PE，physical extent）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑块（LE，logical-extent）"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">逻辑块（LE，logical extent）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实际操作"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">实际操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-普通版本"><span class="nav-number">1.2.</span> <span class="nav-text">2. 普通版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通版本试用与扩容分区连续，没有lvm灵活"><span class="nav-number">1.2.1.</span> <span class="nav-text">普通版本试用与扩容分区连续，没有lvm灵活</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实际操作-1"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">实际操作</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -641,6 +783,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
 
   
 
