@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ftp服务器登陆]]></title>
+    <url>%2F2019%2F02%2F25%2Fftp%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%99%BB%E9%99%86%2F</url>
+    <content type="text"><![CDATA[使用ftp命令登陆ftp服务器123$ ftp$ open 172.20.10.2 2121$ user root 123456]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[linux根目录扩容]]></title>
     <url>%2F2019%2F02%2F18%2Flinux%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%89%A9%E5%AE%B9%2F</url>
     <content type="text"><![CDATA[扩容linux根目录1. lvm版LVM简介LVM全称Logical Volume Manager，逻辑卷管理，在linux系统下对磁盘分区进行管理的机制，是建立在物理磁盘上的抽象层。 物理卷（pv，physical volume）可以理解为linux下的物理磁盘或者磁盘分区，如/dev/sdb（磁盘）、/dev/sdb1（磁盘分区，通过fdisk对/dev/sdb进行操作划分出来的磁盘分区，类似于windows下的C、D、E盘），但是和物理磁盘以及磁盘分区不同的是，物理卷含有和LVM相关的参数 卷组（vg，volume group）由一个或者多个物理卷组成的卷组 逻辑卷（lv，logical volume）通过卷组划分出来的分区，可以用来建立文件系统，例如/dev/mapper/centos-root 是根目录的文件系统挂载点，它就是建立在一个逻辑卷之上的，该文件系统的大小就是这个逻辑卷的大小 物理块（PE，physical extent）每个物理卷被分为若干个物理块，是LVM寻址中的最小单元，有唯一编号，可以设置大小，默认为4MB 逻辑块（LE，logical extent）每个逻辑卷被分为若干个逻辑卷，与PE是一一对应的 实际操作123456789101112131415161718192021222324252627282930313233343536373839404142#创建物理卷，物理卷会写入lvm相关信息pvcreate /dev/sda2#查看创建的物理卷$ pvdisplay --- Physical volume --- PV Name /dev/sda2 VG Name centos PV Size 7.51 GiB / not usable 3.00 MiB Allocatable yes PE Size 4.00 MiB Total PE 1922 Free PE 10 Allocated PE 1912 PV UUID SFY7mk-Tkm3-pvih-tydL-zNaQ-3OcT-hv7hES "/dev/sdb1" is a new physical volume of "1.00 GiB" --- NEW Physical volume --- PV Name /dev/sdb1 VG Name PV Size 1.00 GiB Allocatable NO PE Size 0 Total PE 0 Free PE 0 Allocated PE 0 PV UUID MLLBUH-e9bY-2eMd-Lgpk-70px-4uan-nTRfHQ#新建卷组vgcreate root /dev/sda2 /dev/sda1#新建lvm分区lvcreate -L 8G -n lv root#挂载mount /dev/mapper/root-lv /mnt#扩容vgextend root /dev/sda3lvextend -L 8G /dev/mapper/root-lvresize2fs /dev/mapper/root-lv 2. 普通版本普通版本试用与扩容分区连续，没有lvm灵活实际操作12345678910111213$ fdisk /dev/sda# 输入p查看并记录想要扩容的分区的初始扇区!!!!非常重要# 输入d删除想要删除的分区# 输入n新建分区，初始扇区为之前的记录，结束扇区为想要扩容的大小# 输入w保存分区表的修改# 完成后使用resize2fs完成容量的更新，如果报错可以重启后再试resize2fs /dev/sda1# 使用df -h查看是否成功完成修改]]></content>
